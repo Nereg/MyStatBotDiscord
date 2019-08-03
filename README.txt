@@ -1,1 +1,0 @@
-need apt-get install php-bcmath
