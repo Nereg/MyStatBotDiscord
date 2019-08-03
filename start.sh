@@ -1,1 +1,1 @@
-screen -dmS php php /mystat/public/test/main.php
+screen -dmS php php ./main.php
