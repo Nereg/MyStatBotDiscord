@@ -1,0 +1,9 @@
+{
+    "require": {
+        "charlottedunois/yasmin": "^0.6.1",
+        "charlottedunois/livia": "^0.4.2",
+        "plasma/core": "^0.2.0",
+        "plasma/driver-mysql": "^0.2.0",
+        "react/mysql": "^0.5.4"
+    }
+}

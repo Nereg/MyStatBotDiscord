@@ -1,0 +1,1 @@
+screen -dmS php php /mystat/public/test/main.php

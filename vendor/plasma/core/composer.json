@@ -1,0 +1,36 @@
+{
+    "name": "plasma/core",
+    "description": "Core component of Plasma.",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Charlotte Dunois",
+            "email": "github@charuru.moe"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "charlottedunois/set": "^0.1.1",
+        "charlottedunois/validator": "^0.3.0",
+        "evenement/evenement": "^3.0|^2.0",
+        "react/promise": "^2.7",
+        "react/promise-stream": "^1.1",
+        "react/stream": "^1.0"
+    },
+    "require-dev": {
+        "clue/block-react": "^1.3",
+        "phpunit/phpunit": "^7.0",
+        "react/event-loop": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Plasma\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Plasma\\Tests\\": "tests"
+        }
+    }
+}

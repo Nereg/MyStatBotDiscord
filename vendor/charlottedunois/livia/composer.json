@@ -1,0 +1,33 @@
+{
+    "name": "charlottedunois/livia",
+    "description": "Livia is a Discord Bot framework for PHP.",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "CharlotteDunois",
+            "email": "github@charuru.moe"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.1",
+        "charlottedunois/collection": "^0.2.0",
+        "charlottedunois/validator": "^0.3.0|^0.2.0",
+        "charlottedunois/yasmin": "^0.6.0|dev-master",
+        "symfony/var-dumper": "^4.1"
+    },
+    "require-dev": {
+        "plasma/core": "^0.3.0|^0.2.0|^0.1.0|dev-master",
+        "react/mysql": "^0.5"
+    },
+    "suggest": {
+        "plasma/core": "Required for Plasma Provider",
+        "react/mysql": "Required for MySQL Provider"
+    },
+    "autoload": {
+        "psr-4": {
+            "CharlotteDunois\\Livia\\": "src"
+        }
+    }
+}
