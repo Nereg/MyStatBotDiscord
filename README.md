@@ -17,6 +17,12 @@ My project use [this](https://github.com/CharlotteDunois/Livia) framework and re
 - MySql database
 - My MyStat SDK 
 
+### Just some very funny (not) features (for me)
+
+-  Bot MUST be at least in one guild. [Issue](https://github.com/CharlotteDunois/Yasmin/issues/128) about this
+-  Also make `composer install` on server (but upload "custom" livia lib)
+-  And if you need to post multiline output use ''' ''' 
+
 ### What I`m use
 What i`m use to develop this (and other [projects](https://github.com/users/Nereg/projects/1))? There is list:
 
