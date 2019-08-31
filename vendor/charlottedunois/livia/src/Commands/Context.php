@@ -389,7 +389,7 @@ class Context extends \CharlotteDunois\Yasmin\Models\ClientBase {
                     $owners = 'the bot owner';
                 }
                 
-                return $this->reply('An error occurred while running the command: ` in line : ' .$error->getLine().\get_class($error).': '.\str_replace('`', '', $error->getMessage()).'`'.\PHP_EOL.
+                return $this->reply('An error occurred while running the command: `'.\get_class($error).': '.\str_replace('`', '', $error->getMessage()).'`'.\PHP_EOL.
                         'You shouldn\'t ever receive an error like this.'.\PHP_EOL.
                         'Please contact '.$owners.($this->client->getOption('invite') ? ' in this server: '.$this->client->getOption('invite') : '.'))
                         ->then(function (\CharlotteDunois\Yasmin\Models\Message $msg) use (&$argmsgs) {

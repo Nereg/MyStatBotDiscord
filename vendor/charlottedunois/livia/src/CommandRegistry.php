@@ -535,8 +535,8 @@ class CommandRegistry implements \Serializable {
      */
     function registerDefaultGroups() {
         $this->registerGroup(
-            //(new \CharlotteDunois\Livia\Commands\CommandGroup($this->client, 'commands', 'Commands', true)),
-            //(new \CharlotteDunois\Livia\Commands\CommandGroup($this->client, 'utils', 'Utilities', true))
+            (new \CharlotteDunois\Livia\Commands\CommandGroup($this->client, 'commands', 'Commands', true)),
+            (new \CharlotteDunois\Livia\Commands\CommandGroup($this->client, 'utils', 'Utilities', true))
         );
         
         return $this;

@@ -13,6 +13,13 @@ return function ($client) {
                 'throttling' => array( // Throttling is per-user
                     'usages' => 2,
                     'duration' => 3
+                ),
+                'args' => array(
+                    array(
+                        'key' => 'type',
+                        'prompt' => 'Какую таблицу лидеров вывести? 0 - таблица группы , 1 - таблица потока.',
+                        'type' => 'string'
+                    )
                 )
             ));
         }
@@ -20,18 +27,15 @@ return function ($client) {
         // Checks if the command is allowed to run - the default method from Command class also checks userPermissions.
         // Even if you don't use all arguments, you are forced to match that method signature.
         function hasPermission(\CharlotteDunois\Livia\Commands\Context $context, bool $ownerOverride = true) {
-            return true;
+            return $context->client->isOwner($context->message->author);
         }
         
         // Even if you don't use all arguments, you are forced to match that method signature.
         function run(\CharlotteDunois\Livia\Commands\Context $context, \ArrayObject $args,
                       bool $fromPattern) {
-                        $client = $context->client;
-                        $settings = $client->provider;
-                        $message = $context->message;
-                        $guild = $message->guild;
-                        $command = $context->command;
-                        $id = $message->author->id;
+                            echo var_export($args);
+                            return $context->reply($args['type']);
+                        /*
                         $get = (array)json_decode($settings->get($guild,$id)); 
                         require_once "./MAPI.php";
                         $MAPI = new MyStat();
@@ -49,6 +53,7 @@ $factory->createConnection($uri)->done(function (\React\MySQL\ConnectionInterfac
                                 //$settings->set($guild, 'test',$args['password']);
                                 return $context->reply('Я в сервера мама!');
                             }
+                            */
         }
     });
 };

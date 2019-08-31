@@ -34,39 +34,26 @@ return function ($client) {
         // Even if you don't use all arguments, you are forced to match that method signature.
         function run(\CharlotteDunois\Livia\Commands\Context $context, \ArrayObject $args,
                       bool $fromPattern) {
-                        $client = $context->client;
-                        $settings = $client->provider;
-                        $message = $context->message;
-                        $guild = $message->guild;
-                        $command = $context->command;
-                        $id = $message->author->id;
-                        //$get = (array)json_decode($settings->get($guild,$id)); 
-                        require_once "./MAPI.php";
-                        $MAPI = new MyStat();
                         $args = $context->parseCommandArgs();//I don`t know what is this
-                        $args = explode(' ',$args);
-                        //echo \var_export($command->argsCount);
-                            if ($guild->available == false) { //if in DM
-                                //$token = $MAPI->Login('*****','Kisi_lb7W');
-                                if ($args[0] == 0) { // group table
-                                    /*
-                                    $table = $MAPI->GetLeaderboard($token);
-                                    $Messages = [];
-                                    foreach ($table as $key => $value) {
-                                        $text = 'Место: '. $value->position . PHP_EOL .'Имя: ' . $value->full_name.PHP_EOL.'!['.$value->full_name.']('.$value->photo_path.'"Фотка")';
-                                        $CurrentMessage = new CharlotteDunois\Yasmin\Models\message($client,,$text);
-                                        $Messages += $CurrentMessage;
-                                    }
-                                    $context->reply($Messages);
-                                    */
-                                }
-                                else {
-                                   //$context->reply('fgdgfdgfd'); 
-                                }
-                            } else { // if in guild chat
-                                //$settings->set($guild, 'test',$args['password']);
-                                return $context->reply('Я в сервера мама!');
-                            }   
+                        if(empty($args[0])){
+                            $client = $context->client;
+                            $settings = $client->provider;
+                            $message = $context->message;
+                            $guild = $message->guild;
+                            $command = $context->command;
+                            $id = $message->author->id;
+                            //$get = (array)json_decode($settings->get($guild,$id));
+                            require_once "./MAPI.php";
+                            $MAPI = new MyStat();
+                            $args = explode(' ', $args);
+                            echo \var_export($command->argsCount);
+                            echo \var_export($context->argString);
+                            return $context->reply('Ты сможешь найти это https://mystat.pp.ua/GroupTop здесь');
+                        }
+                        else
+                        {
+                            return 0;
+                        }
         }
     });
 };

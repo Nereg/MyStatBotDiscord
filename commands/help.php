@@ -13,7 +13,7 @@ return function ($client) {
             parent::__construct($client, array(
                 'name' => 'help',
                 'aliases' => array('commands'),
-                'group' => 'help',
+                'group' => 'settings',
                 'description' => 'Displays a list of available commands, or detailed information for a specified command.',
                 'details' => "The command may be part of a command name or a whole command name.\nIf it isn't specified, all available commands will be listed.",
                 'examples' => array('help', 'help prefix'),
