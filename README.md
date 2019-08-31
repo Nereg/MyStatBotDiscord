@@ -23,7 +23,7 @@ My project use [this](https://github.com/CharlotteDunois/Livia) framework and re
 -  Also make `composer install` on server (but upload "custom" livia lib)
 -  And if you need to post multiline output use ''' ''' 
 -  One more (I think) feature : must add debug output to prevent bot from sticking  when no args passed to commands that need them
-
+-  And yeah "custom" Livia becouse of deleted commands 
 ### What I`m use
 What i`m use to develop this (and other [projects](https://github.com/users/Nereg/projects/1))? There is list:
 
