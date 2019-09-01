@@ -85,7 +85,7 @@
 	//$this->log->Log(100,'started login function.');
 	$data = array(
 		'application_key' => '6a56a5df2667e65aab73ce76d1dd737f7d1faef9c52e8b8c55ac75f565d8e8a6',
-		'id_city' => $City_id,
+		'id_city' => null,
 		'password' => $Pass,
 		'username' => $Login
 		);
@@ -125,6 +125,7 @@
 	$options = array(CURLOPT_HTTPHEADER => array('Authorization: Bearer ' . $Token,'Content-Type: application/json'));
 	$result = $this->curl_get($url,$data,$options);
 	$result = json_decode($result);
+	echo var_export($result);
 	if (array_key_exists('message' , $result) == false)
 	{
 		$out = array();
@@ -155,7 +156,7 @@
         }
         foreach ($result[5] as $key => $value) {
         	if ($key != "counter_type") {
-        		$out[5]  = $value; //all
+        		$out[4]  = $value; //all
         	}
         }
         return $out;

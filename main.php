@@ -8,11 +8,11 @@ $loop = \React\EventLoop\Factory::create();
 $client = new \CharlotteDunois\Livia\Client(array(
     'owners' => array('277490576159408128'),
     'unknownCommandResponse' => true,
-    'commandPrefix' => '/'
+    'commandPrefix' => '/',
+    'invite' => 'https://mystat.pp.ua/DiscordServer'
 ), $loop);
-
 $factory = new \React\MySQL\Factory($client->getLoop());
-$factory->createConnection($uri)->done(function (\React\MySQL\ConnectionInterface $db) use ($client) {
+$factory->createConnection($config['DBuri'])->done(function (\React\MySQL\ConnectionInterface $db) use ($client) {
     $provider = new \CharlotteDunois\Livia\Providers\MySQLProvider($db);
     $client->setProvider($provider);
 });

@@ -33,27 +33,14 @@ return function ($client) {
         // Even if you don't use all arguments, you are forced to match that method signature.
         function run(\CharlotteDunois\Livia\Commands\Context $context, \ArrayObject $args,
                       bool $fromPattern) {
-                            echo var_export($args);
-                            return $context->reply($args['type']);
-                        /*
-                        $get = (array)json_decode($settings->get($guild,$id)); 
-                        require_once "./MAPI.php";
-                        $MAPI = new MyStat();
-                        $args = $context->parseCommandArgs();//I don`t know what is this
-                        $args = explode(' ',$args);
-                        echo \var_export($args);
-                            if ($guild->available == false) { //if in DM
-                                $factory = new \React\MySQL\Factory($client->getLoop());
-$factory->createConnection($uri)->done(function (\React\MySQL\ConnectionInterface $db) use ($client) {
-    $provider = new \CharlotteDunois\Livia\Providers\MySQLProvider($db);
-    //$client->setProvider($provider);
-});
-                                return $context->reply('Test');
-                            } else { // if in guild chat
-                                //$settings->set($guild, 'test',$args['password']);
-                                return $context->reply('Я в сервера мама!');
-                            }
-                            */
+                        $client = $context->client;
+                        $settings = $client->provider;
+                        $message = $context->message;
+                        $guild = $message->guild;
+                        $command = $context->command;
+                        $id = $message->author->id;
+                        echo '[VAR_EXPORT] '.\var_export($settings) . PHP_EOL;
+                        return $context->reply('dsfds');
         }
     });
 };

@@ -35,7 +35,6 @@ return function ($client) {
         function run(\CharlotteDunois\Livia\Commands\Context $context, \ArrayObject $args,
                       bool $fromPattern) {
                         $args = $context->parseCommandArgs();//I don`t know what is this
-                        if(empty($args[0])){
                             $client = $context->client;
                             $settings = $client->provider;
                             $message = $context->message;
@@ -45,15 +44,16 @@ return function ($client) {
                             //$get = (array)json_decode($settings->get($guild,$id));
                             require_once "./MAPI.php";
                             $MAPI = new MyStat();
-                            $args = explode(' ', $args);
-                            echo \var_export($command->argsCount);
-                            echo \var_export($context->argString);
-                            return $context->reply('Ты сможешь найти это https://mystat.pp.ua/GroupTop здесь');
-                        }
-                        else
-                        {
-                            return 0;
-                        }
+                            //echo \var_export($command->argsCount);
+                            //echo \var_export($context->argString);
+                            if ($args['type'] == 0)
+                            {
+                                return $context->reply('Ты сможешь найти это здесь : https://mystat.pp.ua/GroupTop');
+                            }
+                            else
+                            {
+                                return $context->reply('Ты сможешь найти это здесь : https://mystat.pp.ua/ClassTop');
+                            }
         }
     });
 };

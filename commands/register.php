@@ -50,9 +50,8 @@ return function ($client) {
                 $MAPI = new MyStat();
                 $args = $context->parseCommandArgs();//I don`t know what is this
                 $args = explode(' ',$args);
-                echo \var_export($command->argsCount);
-                if ($command->argsCount == 2) {
                     if ($guild->available == false) { //if in DM
+                        
                         if (isset($get['password'])) {
                             $context->reply('Ты уже залогинен!');
                         }
@@ -70,9 +69,6 @@ return function ($client) {
                         //$settings->set($guild, 'test',$args['password']);
                         return $context->reply('Я в сервера мама!');
                     }
-                }
-                else {
-                }
         }
     });
 };
