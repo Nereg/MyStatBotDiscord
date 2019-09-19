@@ -42,8 +42,6 @@ return function ($client) {
                             $command = $context->command;
                             $id = $message->author->id;
                             //$get = (array)json_decode($settings->get($guild,$id));
-                            require_once "./MAPI.php";
-                            $MAPI = new MyStat();
                             //echo \var_export($command->argsCount);
                             //echo \var_export($context->argString);
                             if ($args['type'] == 0)

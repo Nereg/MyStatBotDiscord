@@ -55,7 +55,7 @@ return function ($client) {
                                 }
                             } else { // if in guild chat
                                 //$settings->set($guild, 'test',$args['password']);
-                                return $context->reply('Я в сервера мама!');
+                                return $context->reply('Извини но эта команда не доступна для серверов. Хочешь ею воспользоваться ? Напиши мне в ЛС');
                             }
         }
     });

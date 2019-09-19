@@ -14,7 +14,7 @@ return function ($client) {
                 'name' => 'help',
                 'aliases' => array('commands'),
                 'group' => 'settings',
-                'description' => 'Displays a list of available commands, or detailed information for a specified command.',
+                'description' => 'Выводит это сообщение',
                 'details' => "The command may be part of a command name or a whole command name.\nIf it isn't specified, all available commands will be listed.",
                 'examples' => array('help', 'help prefix'),
                 'guildOnly' => false,
@@ -37,13 +37,13 @@ return function ($client) {
         function run(\CharlotteDunois\Livia\Commands\Context $context, \ArrayObject $args, bool $fromPattern) {
             return $context->direct($this->renderHelpMessage($context, $args), array('split' => true))->then(function ($msg) use ($context) {
                 if(!($context->message->channel instanceof \CharlotteDunois\Yasmin\Interfaces\DMChannelInterface)) {
-                    return $context->reply('Sent you a DM with information.');
+                    return $context->reply('Загляни в лс. Я написал тебе тамю');
                 }
                 
                 return $msg;
             }, function () use ($context) {
                 if(!($context->message->channel instanceof \CharlotteDunois\Yasmin\Interfaces\DMChannelInterface)) {
-                    return $context->reply('Unable to send you the help DM. You probably have DMs disabled.');
+                    return $context->reply('Не могу достучаться до тебя. Может ты отключил личные сообщения ?');
                 }
             });
         }

@@ -106,11 +106,35 @@
 			throw new Exception($result['message']);
 	}
 	}
+	/** 
+	* Gets info about user 
+	* @param string Token for MyStat API
+	* @return mixed All data.
+	*https://msapi.itstep.org/api/v1/settings/user-info
+	**/
+	function GetUserInfo ($Token)
+	{
+		$data = array();
+		$url = 'https://msapi.itstep.org/api/v1/settings/user-info';
+		$options = array(CURLOPT_HTTPHEADER => array('Authorization: Bearer ' . $Token,'Content-Type: application/json'));
+		$result = $this->curl_get($url,$data,$options);
+		$result = json_decode($result);
+		//echo var_export($result);
+		if (array_key_exists('message' , $result) == false)
+		{
+			return $result;
+		}
+		else
+		{
+			throw new Exception($result->message);
+		}
+		}
+	
 	/**
 	* Get count of homeworks from token
 	* @param string $Token token to pass to MyStat
 	* @return array 
-	*Number in array - meaning in mystat
+	*Number in array - meaning in mystat (not correct to 2019.06 will fix when I go to academy)(14.09.19 fixed some values like completed , gived and on check I will fix all values "soon")
 	*0 - Completed
 	*1 - Gived by teacher
 	*2 - Overdue 
@@ -129,37 +153,13 @@
 	if (array_key_exists('message' , $result) == false)
 	{
 		$out = array();
-		foreach ($result[0] as $key => $value) { 
-        	if ($key != "counter_type") {
-        		$out[0] = $value; //checked
-        	}
-        }
-        foreach ($result[1] as $key => $value) {
-        	if ($key != "counter_type") {
-        		$out[1] = $value; //given
-        	}
-        }
-        foreach ($result[2] as $key => $value) {
-        	if ($key != "counter_type") {
-        		$out[2] = $value;//overdue
-        	}
-        }
-        foreach ($result[3] as $key => $value) {
-        	if ($key != "counter_type") {
-        		$out[3]  = $value; //checking
-        	}
-        }
-        foreach ($result[4] as $key => $value) {
-        	if ($key != "counter_type") {
-        		$out[4]  = $value; //deleted
-        	}
-        }
-        foreach ($result[5] as $key => $value) {
-        	if ($key != "counter_type") {
-        		$out[4]  = $value; //all
-        	}
-        }
-        return $out;
+		$out[0] = $result[0]->counter;
+		$out[1] = $result[1]->counter; // not proofed 
+		$out[2] = $result[2]->counter; // not proofed
+		$out[3] = $result[3]->counter; // not proofed
+		$out[4] = $result[4]->counter; // not proofed
+		$out[5] = $result[5]->counter; 
+		return $out;
 	}
 	else
 	{
@@ -259,7 +259,5 @@
 		throw new Exception($result->message);
 	}
 	}
-
-}
-
+ }
 ?>

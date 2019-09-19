@@ -1,0 +1,9 @@
+{
+    "DiscordBotKey": "Token for discord bot",
+    "DBuri": "Uri for DB",
+    "MyStatDefaultUsername" : "Default Username for MyStat System (Used in notifications)",
+    "MyStatDefaultPassword" : "Default password",
+    "PDODsn" : "dsn for custom sql commands with PDO",
+    "PDOUsername" : "username for db",
+    "PDOPassword" : "and password to db"
+}
