@@ -48,6 +48,7 @@ function asyncDB ($DB,$query)
         $deffered->reject('Error: ' . $error->getMessage());
     }
     );
+    return $deffered->promise();
 }
 /** 
 * Sends message to user`s DM by user id
@@ -64,29 +65,34 @@ function sendDM ($id,$msg,$client)
     });
     return 0;
 }
-$loop->addPeriodicTimer(4, function () use ($client) { // add timer running each 5 minutes
+$loop->addPeriodicTimer(300, function () use ($client) { // add timer running each 5 minutes also make to clean all DELETE FROM notifications WHERE Delivered = 1 
     $user = $client->owners[277490576159408128]; // first Yasmin object
     $YasminClient = $user->client; // get main Yasmin object
     var_dump($user);
     UpdateDB(); // from regular.php 
     $DB = $client->provider->getDB();
     $query = 'SELECT * FROM notifications ORDER BY Id DESC LIMIT 1';
-    $list = asyncDB($DB,$query);
-    //var_dump($list);
-    if ($list[0]['Delivered'] == 0)
-    {
-        $query = 'SELECT * FROM settings WHERE guild="global"';
-        $result = asyncDB($DB,$query);
-        echo "[NOTIFICATIONS] New homework! Send messages!". PHP_EOL;
-        echo "export result:";
-        //sendDM('277490576159408128','test',$YasminClient);
-        var_dump($result);
-
-    }
-    else
-    {
-        echo "[NOTIFICATIONS] Nothing new.". PHP_EOL;
-    }
+    asyncDB($DB,$query)->then(function($list)use($DB,$YasminClient){
+        if ($list[0]['Delivered'] == 0)
+        {
+            echo "[NOTIFICATIONS] New homework! Send messages!". PHP_EOL;
+            $query = 'SELECT * FROM settings WHERE guild="global"';
+            $result = asyncDB($DB,$query)->then(function($result)use ($YasminClient){
+                $list = json_decode($result[0]["settings"]);
+                foreach ($list as $key => $value) {
+                    //echo "key: ". $key. " value" . $value;
+                    sendDM($key,'Новое домашнее задание !',$YasminClient);
+                }
+            });
+            //sendDM('277490576159408128','test',$YasminClient);
+            asyncDB($DB,'UPDATE notifications SET Delivered=1 WHERE Delivered = 0'); //update record about this notification (but it`s change all notifications that was not sent)
+    
+        }
+        else
+        {
+            echo "[NOTIFICATIONS] Nothing new.". PHP_EOL;
+        }
+    });
 });
 
 

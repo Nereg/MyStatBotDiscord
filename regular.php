@@ -48,8 +48,7 @@ $Homeworks = $MAPI->HomeWorkcount($Token);
 if ($Homeworks[1] > $text->OldHWCount)
 {
     echo "[DB UPDATER]Ahtung!!!!!" . PHP_EOL;
-    $object = array('OldHWCount' => $Homeworks[3] 
-    );
+    $object = array('OldHWCount' => $Homeworks[1]);
     $sth = $dbh->prepare('INSERT INTO notifications(Type,Delivered,Notified,Text) VALUES (0,false,false,:Data)', array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY)); // create guild
     $sth->execute(array('Data' => json_encode($object)));
 }
