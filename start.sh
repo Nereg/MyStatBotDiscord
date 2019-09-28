@@ -1,1 +1,1 @@
-screen -dmS php php ./main.php
+screen -dmS Bot php ./main.php
