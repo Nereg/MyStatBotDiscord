@@ -1,6 +1,8 @@
 <?php
 require_once(__DIR__.'/vendor/autoload.php');
 require_once "config.php";
+require_once "regular.php";
+use React\MySQL\QueryResult;
 /*
 * SETUP
 */
@@ -21,24 +23,72 @@ $factory->createConnection($config['DBuri'])->done(function (\React\MySQL\Connec
     $provider = new \CharlotteDunois\Livia\Providers\MySQLProvider($db);
     $client->setProvider($provider);
 });
-
-$loop->addPeriodicTimer(4, function () use ($client,$DB) { // add timer running each 5 minutes
+/*
+* FUNCTIONS
+*/
+/** 
+ * Make SQl query and return result if needed 
+ * @param object instance of \React\MySQL\ with set uped connection
+ * @param string SQL query
+ */
+function asyncDB ($DB,$query) 
+{
+    $deffered = new \React\Promise\Deferred();
+    $DB->query($query)->then(function (QueryResult $command) use($deffered) {
+        if (isset($command->resultRows)) {
+            // this is a response to a SELECT etc. with some rows (0+)
+            //print_r($command->resultFields);
+            $deffered->resolve($command->resultRows);
+        } else {
+            $deffered->resolve(0);
+        }
+    }, function (Exception $error) use ($deffered) {
+        // the query was not executed successfully
+        echo 'Error: ' . $error->getMessage() . PHP_EOL;
+        $deffered->reject('Error: ' . $error->getMessage());
+    }
+    );
+}
+/** 
+* Sends message to user`s DM by user id
+* @param string user id 
+* @param string message to send
+* @param object instance of yasmin client
+**/
+function sendDM ($id,$msg,$client)
+{
+    $user = $client->fetchUser($id)->then(function ($user) use ($msg){
+        $user->createDM()->then(function($DM) use ($msg){
+            $DM->send($msg);
+        });
+    });
+    return 0;
+}
+$loop->addPeriodicTimer(4, function () use ($client) { // add timer running each 5 minutes
+    $user = $client->owners[277490576159408128]; // first Yasmin object
+    $YasminClient = $user->client; // get main Yasmin object
+    var_dump($user);
+    UpdateDB(); // from regular.php 
     $DB = $client->provider->getDB();
-    $query = "UPDATE admin_default.`settings` SET `settings` = 'test fdgfdg' WHERE `settings`.`guild` = 'global'";
-    $DB->query($query)->then(function(QueryResult $command) {
-        exit();
-        echo "test";
-        echo var_dump($command);
-    });
-    $test = $DB->ping()->then(function (){echo 'Ok';});
-    //var_dump($DB);
-    $DB->on('error', function (Exception $e) {
-        echo 'Error: ' . $e->getMessage() . PHP_EOL;
-    });
+    $query = 'SELECT * FROM notifications ORDER BY Id DESC LIMIT 1';
+    $list = asyncDB($DB,$query);
+    //var_dump($list);
+    if ($list[0]['Delivered'] == 0)
+    {
+        $query = 'SELECT * FROM settings WHERE guild="global"';
+        $result = asyncDB($DB,$query);
+        echo "[NOTIFICATIONS] New homework! Send messages!". PHP_EOL;
+        echo "export result:";
+        //sendDM('277490576159408128','test',$YasminClient);
+        var_dump($result);
+
+    }
+    else
+    {
+        echo "[NOTIFICATIONS] Nothing new.". PHP_EOL;
+    }
 });
-// Get objects for direct messages
-$user = $client->owners; // first Yasmin object
-$YasminClient = $user->client; // get main Yasmin object
+
 
 /*
 * DEBUG MESSAGES
@@ -81,10 +131,13 @@ $client->registry->registerCommandsIn(__DIR__.'/commands');
 // If you have created a command, like the example above, you now have registered the command.
 
 $client->on('ready', function () use ($client) {
+    UpdateDB();//from regular.php dump MyStat data to DB after bot cleaned it  
     echo 'Logged in as '.$client->user->tag.' created on '.
+
            $client->user->createdAt->format('d.m.Y H:i:s').PHP_EOL;
            $client->user->setGame('/help ; mystat.pp.ua');
            //echo(var_export($client->provider));
 });
 $client->login($config['DiscordBotKey'])->done();
 $loop->run($config['DiscordBotKey']);
+?>

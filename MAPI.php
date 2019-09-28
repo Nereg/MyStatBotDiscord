@@ -74,7 +74,7 @@
     	return $result;
 	} 
 	/**
-	* Get token from login and password
+	* Get token from login and password (fun notice username is case-insensitive)
 	* @param string $Pass to send to MyStat
 	* @param string $Login to send to MyStat
 	* @param int $City_id to send to MyStat (can be get from https://msapi.itstep.org/api/v1/public/cities)
@@ -149,16 +149,16 @@
 	$options = array(CURLOPT_HTTPHEADER => array('Authorization: Bearer ' . $Token,'Content-Type: application/json'));
 	$result = $this->curl_get($url,$data,$options);
 	$result = json_decode($result);
-	echo var_export($result);
+	//echo var_export($result);
 	if (array_key_exists('message' , $result) == false)
 	{
 		$out = array();
-		$out[0] = $result[0]->counter;
-		$out[1] = $result[1]->counter; // not proofed 
-		$out[2] = $result[2]->counter; // not proofed
-		$out[3] = $result[3]->counter; // not proofed
-		$out[4] = $result[4]->counter; // not proofed
-		$out[5] = $result[5]->counter; 
+		$out[0] = $result[0]->counter;//DONE
+		$out[1] = $result[1]->counter;//GIVEN
+		$out[2] = null; //need help
+		$out[3] = $result[3]->counter; //GIVEN
+		$out[4] = null; //also need help
+		$out[5] = $result[5]->counter;// ALL
 		return $out;
 	}
 	else
